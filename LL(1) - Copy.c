@@ -9,33 +9,27 @@
 // Grammar
 // E  → T E'
 // E' → + T E' | ε
-// T  → F T'
-// T' → * F T' | ε
-// F  → id
+// T  → id
 // ----------------------
-char *NT[] = {"E","Eprime","T","Tprime","F"};
-#define NNT 5
+char *NT[] = {"E","Eprime","T"};
+#define NNT 3
+char *TERMINALS[] = {"id","+","$"};
+#define NTER 3
 
-char *TERMINALS[] = {"id","+","*","$"};
-#define NTER 4
-
-char *RHS[] = {
-    "T Eprime",       //1
-    "+ T Eprime",     //2
-    "",               //3 (epsilon)
-    "F Tprime",       //4
-    "* F Tprime",     //5
-    "",               //6 (epsilon)
-    "id"              //7
+char *RHS[] =
+{
+    "T Eprime",    // 1
+    "+ T Eprime",  // 2
+    "",            // 3 epsilon
+    "id"           // 4
 };
 
-// LL(1) table
-int TABLE[NNT][NTER] = {
-    {1,0,0,0},   // E
-    {0,2,0,3},   // E'
-    {4,0,0,0},   // T
-    {0,6,5,6},   // T'
-    {7,0,0,0}    // F
+// LL(1) table: nonterminal x terminal -> production index
+int TABLE[NNT][NTER] =
+{
+    {1,0,0},  // E
+    {0,2,3},  // E'
+    {4,0,0}   // T
 };
 
 // ----------------------
